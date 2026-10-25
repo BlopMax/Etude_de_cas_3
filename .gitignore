@@ -4,3 +4,4 @@ dist/
 tests/*.js
 tests/*.d.ts
 tests/*.map
+coverage/
