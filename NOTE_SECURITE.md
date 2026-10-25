@@ -12,7 +12,7 @@ J'ai choisi `helmet` parce qu'il traite le premier risque. La fuite d'informatio
 
 Le middleware se trouve dans `src/middlewares/security.middleware.ts` et il est activé dans `src/app.ts` avec `app.use(securityHeaders)`, avant les routes. helmet ajoute aussi d'autres en-têtes (`Content-Security-Policy`, `Strict-Transport-Security`...) qui servent surtout pour des pages web, pas pour du JSON. Je les ai conservés, car ils ne gênent pas le fonctionnement de l'API.
 
-Pour vérifier, `tests/security.test.ts` contrôle les en-têtes sur la route publique `/health`, sur `/api/auth/login` (erreur 400 sans identifiants), et sur `/api/columns` et `/api/ofs` (erreur 401 sans token). helmet fonctionne donc sur les routes publiques comme sur les routes protégées. Les tests vérifient aussi `/api/columns` et `/api/ofs` sans token (401, `No token provided`), avec un faux token (401, `Invalid or expired token`) et avec un vrai token (200). Les 14 tests du projet passent.
+Pour vérifier, `tests/security.test.ts` contrôle les en-têtes sur la route publique `/health`, sur `/api/auth/login` (erreur 400 sans identifiants), et sur `/api/columns` et `/api/ofs` (erreur 401 sans token). helmet fonctionne donc sur les routes publiques comme sur les routes protégées. Les tests vérifient aussi `/api/columns` et `/api/ofs` sans token (401, `No token provided`), avec un faux token (401, `Invalid or expired token`) et avec un vrai token (200). Les 49 tests du projet passent.
 
 Avec l'API lancée par Docker Compose :
 

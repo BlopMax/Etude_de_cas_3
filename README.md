@@ -38,7 +38,10 @@ J'interviens comme développeur DevOps chargé de préparer la mise en productio
 │   ├── README.md               # Documentation des tests
 │   ├── setup.ts                # Base MongoDB en mémoire
 │   ├── helpers.ts              # Création des données de test
+│   ├── app.test.ts             # Test du health check
+│   ├── auth.test.ts            # Tests des routes d'authentification
 │   ├── columns.test.ts         # Tests des routes des colonnes
+│   ├── ofs.test.ts             # Tests des routes des OF
 │   ├── security.test.ts        # Tests de helmet et des erreurs 401
 │   └── *.d.ts                  # Fichiers fournis avec le code de base
 ├── .env.example                # Modèle du fichier .env
@@ -139,7 +142,7 @@ Les tests utilisent **MongoDB Memory Server** (une instance MongoDB en mémoire)
 - Authentification : les routes `/api/columns` et `/api/ofs` sont protégées par le middleware `authenticate` (JWT). Les tests vérifient le code 401 sans token ou avec un faux token.
 - En-têtes HTTP : le middleware `helmet` (`src/middlewares/security.middleware.ts`), activé dans `src/app.ts`, retire `X-Powered-By` et ajoute notamment `X-Content-Type-Options: nosniff` sur toutes les réponses.
 - Secrets : le `.env` n'est ni versionné (`.gitignore`) ni copié dans l'image Docker (`.dockerignore`). L'application refuse de démarrer si `MONGODB_URI` ou `JWT_SECRET` manquent.
-- Dépôt : `git ls-files` confirme que ni `node_modules/`, ni `.env`, ni `dist/`, ni `coverage/` ne sont suivis. Testé dans un dossier vide : après `git clone`, `npm ci` et la copie du `.env`, les 14 tests passent avec `npm test -- --run` et `npm run build` compile sans erreur.
+- Dépôt : `git ls-files` confirme que ni `node_modules/`, ni `.env`, ni `dist/`, ni `coverage/` ne sont suivis. Testé dans un dossier vide : après `git clone`, `npm ci` et la copie du `.env`, les 49 tests passent avec `npm test -- --run` et `npm run build` compile sans erreur.
 
 Points non corrigés (détaillés dans `NOTE_SECURITE.md` et `ANALYSE_EXISTANT.md`) : pas de limite de tentatives sur `/api/auth/login`, inscription ouverte à tous, risque d'injection NoSQL dans les mises à jour, et vulnérabilités signalées par `npm audit` dans les dépendances.
 
