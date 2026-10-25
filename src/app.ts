@@ -4,11 +4,12 @@ import { env } from './config/env.js';
 import { logger } from './config/logger.js';
 import routes from './routes/index.js';
 import { errorHandler } from './middlewares/error.middleware.js';
+import { securityHeaders } from './middlewares/security.middleware.js';
 
 /**
  * Creates and configures the Express application.
  * 
- * Sets up middleware (CORS, JSON parsing) and routes.
+ * Sets up middleware (security headers, CORS, JSON parsing) and routes.
  * Error handler must be the last middleware.
  * Exported for use in server.ts and testing.
  * 
@@ -24,6 +25,7 @@ export function createApp(): Express {
   const app = express();
 
   // Middleware
+  app.use(securityHeaders);
   app.use(cors({ origin: env.CORS_ORIGIN }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
